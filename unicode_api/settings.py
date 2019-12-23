@@ -46,20 +46,20 @@ INSTALLED_APPS = [
 
     #3rd party apps
     'rest_framework',
-
+    'rest_framework.authtoken',
 
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ),
+    ],
 }
 
-AUTHENTICATION_BACKENDS = (
-    ('django.contrib.auth.backends.ModelBackend'),
-)
 
 
 MIDDLEWARE = [
@@ -95,6 +95,11 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    ('django.contrib.auth.backends.ModelBackend'),
+)
+
 
 WSGI_APPLICATION = 'unicode_api.wsgi.application'
 
