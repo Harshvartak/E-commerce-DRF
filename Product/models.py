@@ -11,8 +11,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
-
-
+        
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
 
