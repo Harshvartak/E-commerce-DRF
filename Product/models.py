@@ -11,7 +11,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
-        
+
     def save(self, *args, **kwargs):
         super(Product, self).save(*args, **kwargs)
 
@@ -19,17 +19,19 @@ class Cart(models.Model):
     user = models.OneToOneField(CustomUser, null=True, blank=True, on_delete=models.CASCADE)
     total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
-    products = models.ManyToManyField(Product , blank=True)
+    products = models.ManyToManyField(Product,blank=True)
     quantity = models.IntegerField(default=1)
 
 
     def __str__(self):
-        return "User: has items in their cart. Their total is ${}".format( self.total)
+        return "User: has items in their cart. Their total is ${}".format(self.total)
     def save(self, *args, **kwargs):
         self.total=0
         for product in self.products.all():
             self.total+=product.cost
+        Cart.save()
         super(Cart, self).save(*args, **kwargs)
+
 
 
     def get_all_products(self):
@@ -37,3 +39,6 @@ class Cart(models.Model):
         for prod in self.products:
             product.append(prod)
         return product
+
+
+"""Solve the issue present here """
